@@ -1,3 +1,11 @@
-#Install Python3 and pip then
+#Se apos instalar o maria_db não conseguir entrar, defina uma senha pro root com o seguinte:
+sudo /usr/bin/mysql_secure_installation
+#Conecte no banco com o seguinte:
+sudo mysql -u root -p
+#E rode o seguine pra conseguir conectar como root:
+GRANT ALL PRIVILEGES on *.* to 'root'@'localhost' IDENTIFIED BY '<DigiteASenhaAqui>';
+FLUSH PRIVILEGES;
+#Instale Python3 e pip e crie o repositorio env:
 python3 -m venv env
 source env/bin/activate
+sudo pip3 install -r requirements.txt
