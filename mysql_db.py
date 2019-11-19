@@ -32,3 +32,28 @@ GROUP BY e.id_UF \
 ORDER BY r.id_regiao, e.nome_UF")
 	columns = cursor.description
 	return [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+
+def consulta_acertos_categoria():
+	cursor.execute("SELECT cat.id_categoria AS '#', cat.nome_categoria AS 'Categoria' \
+, (SELECT COUNT(c2.id_candidato) FROM candidato c2 WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=15) AS '2008: Candidatos' \
+, (SELECT CAST( AVG(c2.acertos_total) AS DECIMAL (4,2) ) FROM candidato c2 \
+	WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=15) AS 'Média' \
+, (SELECT COUNT(c2.id_candidato) FROM candidato c2 WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=16) AS '2009: Candidatos' \
+, (SELECT CAST( AVG(c2.acertos_total) AS DECIMAL (4,2) ) FROM candidato c2 \
+	WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=16) AS 'Média' \
+, (SELECT COUNT(c2.id_candidato) FROM candidato c2 WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=20) AS '2010: Candidatos' \
+, (SELECT CAST( AVG(c2.acertos_total) AS DECIMAL (4,2) ) FROM candidato c2 \
+	WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=20) AS 'Média' \
+, (SELECT COUNT(c2.id_candidato) FROM candidato c2 WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=25) AS '2011: Candidatos' \
+, (SELECT CAST( AVG(c2.acertos_total) AS DECIMAL (4,2) ) FROM candidato c2 \
+	WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=25) AS 'Média' \
+, (SELECT COUNT(c2.id_candidato) FROM candidato c2 WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=28) AS '2012: Candidatos' \
+, (SELECT CAST( AVG(c2.acertos_total) AS DECIMAL (4,2) ) FROM candidato c2 \
+	WHERE c2.id_categoria=cat.id_categoria AND c2.id_evento=28) AS 'Média' \
+, COUNT(can.id_candidato) AS 'Total Candidatos' \
+, CAST( AVG(can.acertos_total) AS DECIMAL (4,2) ) AS 'Média Acertos' \
+FROM categoria cat \
+INNER JOIN candidato can ON can.id_categoria=cat.id_categoria \
+ GROUP BY cat.id_categoria")
+	columns = cursor.description
+	return [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]

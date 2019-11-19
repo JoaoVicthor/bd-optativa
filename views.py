@@ -16,12 +16,13 @@ def page_candidatos_lingua():
 def page_candidatos_estado():
 	return return_template(output = criar_tabela(mysql_db.consulta_candidatos_estado()))
 
+@app.route('/acertos_categoria')
+def page_acertos_categoria():
+	return render_template("output.html", output = criar_tabela(mysql_db.consulta_acertos_categoria()))
+
 def return_template(output):
 	return render_template("output.html", output = output)
 
-# @app.route('/acertos_categoria')
-# def page_candidatos_lingua():
-# 	return render_template("output.html", output = )
 
 def criar_tabela(resultado):
 	dict_keys = resultado[0].keys()
