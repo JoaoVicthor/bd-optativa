@@ -17,7 +17,7 @@ def page_candidatos_estado():
 	return return_template(output = criar_tabela(mysql_db.consulta_candidatos_estado()))
 
 def return_template(output):
-	return render_template("output.html", output = criar_tabela(mysql_db.consulta_candidatos_estado()))
+	return render_template("output.html", output = output)
 
 # @app.route('/acertos_categoria')
 # def page_candidatos_lingua():
