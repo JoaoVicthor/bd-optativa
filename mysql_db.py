@@ -57,3 +57,32 @@ INNER JOIN candidato can ON can.id_categoria=cat.id_categoria \
  GROUP BY cat.id_categoria")
 	columns = cursor.description
 	return [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+
+def consulta_hibrida_local_dif_residencia(id_candidatos):
+	string_id_candidatos = ','.join(str(candidato) for candidato in id_candidatos)
+	cursor.execute("SELECT ev.descricao_evento AS 'Vestibular', COUNT(c.id_candidato) AS '#Candidatos' \
+	FROM candidato c \
+	INNER JOIN evento ev ON ev.id_evento=c.id_evento \
+	INNER JOIN bairro b ON b.id_bairro=c.id_bairro \
+	INNER JOIN municipio m ON m.id_municipio=b.id_municipio \
+	INNER JOIN `local` l ON l.id_local=c.id_local \
+	WHERE c.id_candidato IN ("+ string_id_candidatos + ") \
+	AND l.nome_local != m.nome_municipio \
+	GROUP BY ev.id_evento")
+	columns = cursor.description
+	return [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+
+def consulta_hibrida_categoria_sem_pc(id_candidatos, categoria = "Candidatos oriundos de Escola Pública"):
+	string_id_candidatos = ','.join(str(candidato) for candidato in id_candidatos)
+	cursor.execute("select cat.nome_categoria as 'Nome categoria', count(can.id_candidato) as '#Candidatos' from candidato can \
+	inner join categoria cat on cat.id_categoria=can.id_categoria where can.id_candidato in (" + string_id_candidatos +") and cat.nome_categoria = '" + categoria + "' \
+	group by cat.id_categoria")
+	columns = cursor.description
+	return [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+
+def consulta_hibrida_vestibular_duas_vezes_por_experiencia(id_candidatos):
+	string_id_candidatos = ','.join(str(candidato) for candidato in id_candidatos)
+	cursor.execute("select 'Duas' as 'NÚMERO DE VEZES QUE VOCÊ PRESTOU VESTIBULAR PARA A UFSC' ,'Sim' as 'Por Experiência', \
+	count(c.id_candidato) as '#Candidatos' from candidato c where c.id_candidato in (" + string_id_candidatos + ") and c.por_experiencia = 'S'")
+	columns = cursor.description
+	return [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
