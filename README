@@ -1,11 +1,36 @@
+### MYSQL
 #Se apos instalar o maria_db não conseguir entrar, defina uma senha pro root com o seguinte:
 sudo /usr/bin/mysql_secure_installation
+
 #Conecte no banco com o seguinte:
 sudo mysql -u root -p
-#E rode o seguine pra conseguir conectar como root:
+
+#E rode o seguine pra conseguir conectar como root e trocar a senha no campo abaixo:
 GRANT ALL PRIVILEGES on *.* to 'root'@'localhost' IDENTIFIED BY '<DigiteASenhaAqui>';
 FLUSH PRIVILEGES;
-#Instale Python3 e pip e crie o repositorio env:
+
+#As definições que utilizei foram:
+  user="root",
+  passwd="1234",
+  database='vestibular_relacional'
+##Se precisar de mudar algo, altere o mysql_db.py onde eu comentei##
+
+#Rode os scripts de create e insert ALL and you're good to go
+
+### MongoDB
+# Instala o Studio 3T pra fazer o bulk load. É só instalar o mongo e inicializar o serviço, sussão.
+# Abre o Studio 3T pra criar a database e a collection e faça o import dos JSON NA COLLECTION CRIADA. Os nomes que usei foram:
+Database = vestibular_documento
+Collection = candidato_questionario 
+##Se necessario eh soh mudar no mongo_db.py onde eu comentei##
+
+#Instale Python3 e pip, crie o repositorio env e instale as dependências do projeto:
 python3 -m venv env
 source env/bin/activate
 sudo pip3 install -r requirements.txt
+
+#Sempre que for rodar o servidor
+source env/bin/activate \\Pra ativar o virtual environment
+python3 views.py \\Pra rodar o sisteminha.
+
+Daí é só acessar localhost:5000

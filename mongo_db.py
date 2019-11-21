@@ -1,11 +1,11 @@
 import pymongo 
 client = pymongo.MongoClient()
-db = client['vestibular_documento']
-
+db = client['vestibular_documento'] #Se necessario altere aqui. 'vestibular_documento' é o nome da DATABASE
+col = db.candidato_questionario     #"candidato_questionario" aqui é o nome da collection. Se necessario, altere
 
 def consulta_count_candidatos_questao_x(x = 34):
 	str_x = adiciona_zero_a_esquerda(x)
-	cursor = db.candidato_questionario.aggregate([{ "$match": {
+	cursor = col.aggregate([{ "$match": {
 	    "questionario.q"+str_x+".id_questao": x
 	    }
 	},
@@ -32,7 +32,7 @@ def consulta_count_candidatos_questao_x(x = 34):
 	return result
 
 def consulta_candidatos_por_meio_de_transporte(meio_de_transporte = "Outros"):
-	cursor = db.candidato_questionario.aggregate([{ "$match": {
+	cursor = col.aggregate([{ "$match": {
     "questionario.q27.id_questao": 27
     , "questionario.q27.resposta_literal27": meio_de_transporte
     }
@@ -51,7 +51,7 @@ def consulta_candidatos_por_meio_de_transporte(meio_de_transporte = "Outros"):
 	return list(cursor)[0]['Candidatos']
 
 def consulta_candidatos_sem_computador_em_casa():
-	cursor = db.candidato_questionario.aggregate([{ "$match": {
+	cursor = col.aggregate([{ "$match": {
     "questionario.q25.id_questao": 25
     , "questionario.q25.resposta_literal25": "Não"
     }
@@ -70,7 +70,7 @@ def consulta_candidatos_sem_computador_em_casa():
 	return list(cursor)[0]['Candidatos']
 
 def consulta_fez_vestibular_duas_vezes():
-	cursor = db.candidato_questionario.aggregate([{ "$match": {
+	cursor = col.aggregate([{ "$match": {
     "questionario.q12.id_questao": 12
     , "questionario.q12.resposta_literal12": "Duas"
     }
@@ -85,15 +85,6 @@ def consulta_fez_vestibular_duas_vezes():
 	     }
 	}])
 	return list(cursor)[0]['Candidatos']
-
-def consulta_possiveis_meios_de_transporte():
-	# possiveis respostas: 
-	# Bicicleta
-	# Carro próprio ou da família
-	# Moto
-	# Ônibus
-	# Outros
-	return ['Bicicleta', 'Carro próprio ou da família', 'Moto', 'Ônibus', "Outros"]
 
 def adiciona_zero_a_esquerda(x):
 	str_x = str(x)

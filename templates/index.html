@@ -2,24 +2,123 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Vestibular UFSC 2008-2012</title>
+	<title>Vestibulares UFSC 2008-2012</title>
 	<!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </head>
 <body>
-	<h1>OLAP do Vestibular</h1>
+	<div class="col s12 m12 l12">
+		<div class="container">
+	
+	<h1 class="center">Vestibulares UFSC 2008-2012</h1>
+	<div class="divider"></div>
+	<h4 class="center">Mysql</h4>
+	<div class="section">
 	<h5>Total de Candidatos por opção de Língua Estrangeira</h5>
-	<p>dropdown com lista de possibilidades <a class="waves-effect waves-light btn" href="/candidatos_lingua">Submit</a></p>
-	<p><a href="/candidatos_estado">candidatos_estado</a> </p>
-	<p><a href="/acertos_categoria">acertos_categoria</a></p>
-	<p><a href="/acertos_candidato_questao">acertos_candidato_questao</a></p>
-	<p><a href="/candidatos_por_meio_de_transporte">acertos_candidato_questao</a></p>
-	<p><a href="/candidatos_por_categoria_sem_pc">candidatos_por_categoria_sem_pc</a></p>
-	<p><a href="/candidatos_vestibular_duas_vezes_por_experiencia">consulta_fez_vestibular_duas_vezes</a></p>
-
+	<form action="{{ url_for('page_candidatos_lingua') }}" method="POST"><p>
+	<select style="display: block;" name="select">
+ 	<option value="ALEMÃO">ALEMÃO</option> 
+  	<option value="ESPANHOL">ESPANHOL</option>
+  	<option value="FRANCÊS">FRANCÊS</option>
+  	<option value="INGLÊS" selected >INGLÊS</option>
+  	<option value="ITALIANO">ITALIANO</option>
+  	<option value="LIBRAS">LIBRAS</option>
+	</select> 
+	</p>
+	<div class="center"><input class="waves-effect waves-light btn white center" type="submit" value="Submit"></div></form>
+	</div>
+	<div class="section">
+	<h5>Total de candidatos residentes por estado fizeram o vestibular</h5>
+	<form action="{{ url_for('page_candidatos_estado') }}" method="POST"><p> 
+	<select style="display: block;" name="select">
+ 	<option value="Acre">Acre</option> 
+  	<option value="Alagoas">Alagoas</option>
+  	<option value="Amapá">Amapá</option>
+  	<option value="Amazonas" >Amazonas</option>
+  	<option value="Bahia">Bahia</option>
+  	<option value="Ceará">Ceará</option>
+  	<option value="Distrito Federal">Distrito Federal</option>
+  	<option value="Espírito Santo">Espírito Santo</option>
+  	<option value="Goiás">Goiás</option>
+  	<option value="Maranhão">Maranhão</option>
+  	<option value="Mato Grosso">Mato Grosso</option>
+  	<option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+  	<option value="Minas Gerais">Minas Gerais</option>
+  	<option value="Pará">Pará</option>
+  	<option value="Paraíba">Paraíba</option>
+  	<option value="Paraná">Paraná</option>
+  	<option value="Pernambuco">Pernambuco</option>
+  	<option value="Piauí">Piauí</option>
+  	<option value="Rio de Janeiro">Rio de Janeiro</option>
+  	<option value="Rio Grande do Norte">Rio Grande do Norte</option>
+  	<option value="Rio Grande do Sul">Rio Grande do Sul</option>
+  	<option value="Rondônia">Rondônia</option>
+  	<option value="Roraima">Roraima</option>
+  	<option value="Santa Catarina" selected>Santa Catarina</option>
+  	<option value="São Paulo">São Paulo</option>
+  	<option value="Sergipe">Sergipe</option>
+  	<option value="Tocantins">Tocantins</option>
+	</select> </p>
+	<div class="center"><input class="waves-effect waves-light btn white" type="submit" value="Submit"></div></form>
+	</div>
+	<div class="section">
+	<h5>Média de Acertos dos Candidatos por Categoria</h5>
+	<form action="{{ url_for('page_acertos_categoria') }}" method="POST"><p>
+	<select style="display: block;" name="select">
+ 	<option value="Candidatos autodeclarados Negros">Candidatos autodeclarados Negros</option> 
+  	<option value="Candidatos oriundos de Escola Pública" selected>Candidatos oriundos de Escola Pública</option>
+  	<option value="Candidatos da Classificação Geral (Não Optantes)">Candidatos da Classificação Geral (Não Optantes)</option>
+  	<option value="Candidatos autodeclarados Indígenas" selected >Candidatos autodeclarados Indígenas</option>
+	</select> </p>
+	<div class="center"><input class="waves-effect waves-light btn white" type="submit" value="Submit"></div></form>
+	</div>
+	<div class="divider"></div>
+	<h4 class="center">MongoDB</h4>
+	<div class="section">
+	<h5>Total de candidatos responderam cada alternativa da questão</h5>
+	<form action="{{ url_for('page_acertos_candidato_questao') }}" method="POST"> <p>
+	<select style="display: block;" name="select">
+ 	{% for i in range(34) %} 
+ 	 <option value="{{i+1}}">{{i+1}}</option>
+ 	{% endfor %}
+	</select> </p>
+	<div class="center"><input class="waves-effect waves-light btn white" type="submit" value="Submit"></div></form>
+	</div>
+	<div class="divider"></div>
+	<h4 class="center">Mysql + MongoDB</h4>
+	<div class="section">
+	<h5>Total de candidatos que residem em cidade diferente do vestibular por meio de transporte</h5>
+	<form action="{{ url_for('page_candidatos_por_meio_de_transporte') }}" method="POST"> <p>
+	<select style="display: block;" name="select">
+ 	<option value="Bicicleta">Bicicleta</option> 
+  	<option value="Carro próprio ou da família">Carro próprio ou da família</option>
+  	<option value="Moto">Moto</option>
+  	<option value="Ônibus" selected >Ônibus</option>
+  	<option value="Outros">Outros</option>
+	</select> </p>
+	<div class="center"><input class="waves-effect waves-light btn white" type="submit" value="Submit"></div></form>
+</div>
+<div class="section">
+	<h5>Total de candidatos que não possuem computador por categoria</h5>
+	<form action="{{ url_for('page_candidatos_por_categoria_sem_pc') }}" method="POST"> <p>
+	<select style="display: block;" name="select">
+ 	<option value="Candidatos autodeclarados Negros">Candidatos autodeclarados Negros</option> 
+  	<option value="Candidatos oriundos de Escola Pública" selected>Candidatos oriundos de Escola Pública</option>
+  	<option value="Candidatos da Classificação Geral (Não Optantes)">Candidatos da Classificação Geral (Não Optantes)</option>
+  	<option value="Candidatos autodeclarados Indígenas" selected >Candidatos autodeclarados Indígenas</option>
+	</select> </p>
+	<div class="center"><input class="waves-effect waves-light btn white" type="submit" value="Submit"></div></form>
+</div>
+<div class="section">
+	<h5>Total de candidatos que prestaram vestibular 2 vezes fizeram por experiência</h5>
+	<form action="{{ url_for('page_candidatos_vestibular_duas_vezes_por_experiencia') }}" method="POST"> 
+	<div class="center"><input class="waves-effect waves-light btn white" type="submit" value="Submit"></div></form></p>
+	<div class="divider"></div>
+	</div></div></div>
+	
 </body>
 </html>
